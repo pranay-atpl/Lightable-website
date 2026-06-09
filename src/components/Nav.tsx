@@ -20,6 +20,7 @@ export function Nav() {
   }, []);
 
   // close mobile menu on route change
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMobileOpen(false), [pathname]);
 
   // lock scroll while mobile menu open

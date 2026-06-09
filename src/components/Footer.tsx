@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV, SITE, PARTNERS } from "@/lib/site";
+import { SITE, PARTNERS } from "@/lib/site";
 import { Wordmark } from "./Wordmark";
 import { ArrowUpRight } from "./icons";
 

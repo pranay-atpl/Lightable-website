@@ -44,7 +44,10 @@ export function MoodProvider({ children }: { children: React.ReactNode }) {
   const [bri, setBriState] = useState(initial.bri);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // hydrate from storage (the no-flash script already set the CSS vars)
+  // Hydrate from storage on mount (the no-flash script already set the CSS vars
+  // before paint). localStorage and matchMedia are client-only, so this must run
+  // in an effect — these setState calls are intentional.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -65,6 +68,7 @@ export function MoodProvider({ children }: { children: React.ReactNode }) {
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // persist + apply on any change
   useEffect(() => {

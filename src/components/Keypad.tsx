@@ -10,6 +10,9 @@ export function Keypad() {
   const [mounted, setMounted] = useState(false);
   const panelId = useId();
 
+  // Mounted flag avoids an SSR/client mismatch on the Kelvin readout (the value
+  // depends on localStorage, which is unavailable during server render).
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   // Close on Escape for keyboard users.
