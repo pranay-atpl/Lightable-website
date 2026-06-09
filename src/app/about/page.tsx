@@ -22,7 +22,7 @@ const team = [
 const values = [
   { tag: "Restraint", title: "Light, not hardware", body: "The best lighting is invisible. We design so you notice the room, never the fittings." },
   { tag: "Engineering", title: "Designed to be built", body: "Every scheme is documented and commissioned with the rigour of an engineering discipline." },
-  { tag: "Service", title: "We stay after handover", body: "A designed environment is tuned over time. We're on call to keep yours at its best." },
+  { tag: "Service", title: "We stay after handover", body: "A designed environment is tuned over time. We’re on call to keep yours at its best." },
 ];
 
 export default function AboutPage() {
@@ -128,7 +128,7 @@ export default function AboutPage() {
 
       <CTASection
         title="Work with a studio that designs with light."
-        lede="We collaborate with architects, interior designers and private clients. Let's talk about your space."
+        lede="We collaborate with architects, interior designers and private clients. Let’s talk about your space."
         label="Get in touch"
       />
 

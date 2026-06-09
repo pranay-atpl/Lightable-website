@@ -61,7 +61,7 @@ export default function ProjectsPage() {
 
       <CTASection
         title="Imagine your space on this page."
-        lede="Tell us about the project. We'll design the light that makes it worth photographing."
+        lede="Tell us about the project. We’ll design the light that makes it worth photographing."
         label="Book a consultation"
       />
 

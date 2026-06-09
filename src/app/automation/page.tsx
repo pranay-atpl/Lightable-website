@@ -110,7 +110,7 @@ export default function AutomationPage() {
       <CTASection
         eyebrow="Plan a smart space"
         title="Design the whole environment around light."
-        lede="From a single room of integrated AV to a whole-home system, we'll plan it as one — with lighting at its heart."
+        lede="From a single room of integrated AV to a whole-home system, we’ll plan it as one — with lighting at its heart."
         label="Start a conversation"
       />
 

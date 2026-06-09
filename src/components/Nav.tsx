@@ -155,7 +155,7 @@ export function Nav() {
           background:color-mix(in oklch,var(--bg),transparent 2%);backdrop-filter:blur(10px);
           opacity:0;visibility:hidden;transform:translateY(-8px);overflow-y:auto;
           transition:opacity .35s ease,transform .35s ease,visibility .35s;}
-        .nav-mobile.is-open{opacity:1;visibility:visible;transform:none;}
+        .nav-mobile.is-open{opacity:1;visibility:visible;transform:none;overscroll-behavior:contain;}
         .nav-mobile ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.2rem;}
         .nav-mobile-link{display:flex;align-items:center;justify-content:space-between;
           padding:.9rem .2rem;font-family:var(--font-fraunces),serif;font-size:1.6rem;

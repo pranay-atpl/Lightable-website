@@ -84,9 +84,21 @@ src/
 - [x] 7. Automation / Smart Spaces umbrella
 - [x] 8. Projects + case-study template, Process, About, Contact
 - [x] 9. Shared: Placeholder system, partner wall, SEO metadata, sitemap/robots, JSON-LD
-- [ ] 10. SEO pass (`/seo audit`, `/seo page`, `/seo schema`) + apply fixes
-- [ ] 11. Vercel web-design-guidelines accessibility/perf audit + fixes
-- [ ] 12. Final QA pass (reduced-motion, contrast across all moods, keyboard, responsive)
+- [x] 10. SEO pass — applied manually: per-page `<title>`/description/canonical, Open Graph +
+      Twitter, semantic headings (one `<h1>` per page), descriptive alt text, `sitemap.xml`,
+      `robots.txt`, and JSON-LD (`Organization` + `LocalBusiness` + `Service` +
+      `BreadcrumbList`, plus `CreativeWork` per project).
+      ⚠ The dedicated `claude-seo` slash commands (`/seo audit`, `/seo page`, `/seo schema`)
+      were only just installed and register as commands **after a Claude Code reload** — they
+      weren't invocable in this build session. Re-run them after reload to layer on their checks.
+- [x] 11. Vercel web-design-guidelines audit — fetched the live checklist and applied: icon
+      buttons labelled, decorative icons `aria-hidden`, `aria-live` on async updates, visible
+      `:focus-visible` (and `:focus-within` on menus), labelled form controls with correct
+      `type`/`inputMode`/`autocomplete`, reduced-motion variants, explicit transition props,
+      `touch-action: manipulation`, `overscroll-behavior: contain`, `color-scheme`+`theme-color`,
+      tabular numerals, curly apostrophes, `scroll-margin-top` for anchors.
+- [x] 12. Final QA — `npm run build` (18 routes prerender) + `npm run lint` clean; runtime
+      smoke test (all routes 200); reduced-motion, keyboard, and contrast-across-moods verified.
 
 ---
 

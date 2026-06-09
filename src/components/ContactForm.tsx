@@ -45,14 +45,30 @@ export function ContactForm() {
         </div>
         <div className="cf-field">
           <label htmlFor="cf-email">Email</label>
-          <input id="cf-email" name="email" type="email" autoComplete="email" required placeholder="you@email.com" />
+          <input
+            id="cf-email"
+            name="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            spellCheck={false}
+            required
+            placeholder="you@email.com"
+          />
         </div>
       </div>
 
       <div className="cf-row">
         <div className="cf-field">
           <label htmlFor="cf-phone">Phone <span className="cf-opt">(optional)</span></label>
-          <input id="cf-phone" name="phone" type="tel" autoComplete="tel" placeholder="+44 …" />
+          <input
+            id="cf-phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="+44 …"
+          />
         </div>
         <div className="cf-field">
           <label htmlFor="cf-type">Project type</label>
@@ -76,7 +92,7 @@ export function ContactForm() {
           name="message"
           rows={5}
           required
-          placeholder="Tell us about the space, the rooms involved and how you'd like it to feel…"
+          placeholder="Tell us about the space, the rooms involved and how you’d like it to feel…"
         />
       </div>
 

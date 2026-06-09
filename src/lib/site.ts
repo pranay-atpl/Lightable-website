@@ -193,7 +193,7 @@ export const PROCESS: ProcessStep[] = [
   {
     no: "07",
     title: "Handover & aftercare",
-    body: "We train you on the system, fine-tune once you've lived with it, and stay on call. A designed environment deserves to keep its edge.",
+    body: "We train you on the system, fine-tune once you’ve lived with it, and stay on call. A designed environment deserves to keep its edge.",
     deliverables: ["Training", "Fine-tuning visit", "Ongoing support"],
   },
 ];

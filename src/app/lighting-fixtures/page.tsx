@@ -34,7 +34,7 @@ export default function FixturesPage() {
       <PageHero
         eyebrow="Lighting · Fixtures & supply"
         title={<>Architectural fixtures. Never decorative.</>}
-        lede="We specify and supply the tools that deliver the design — precise, low-glare, built to disappear into the architecture. If it's a feature lamp or an ornament, it isn't us."
+        lede="We specify and supply the tools that deliver the design — precise, low-glare, built to disappear into the architecture. If it’s a feature lamp or an ornament, it isn’t us."
         crumbs={[{ name: "Fixtures & Supply", href: "/lighting-fixtures" }]}
         aside={
           <div className="lit glow-edge" style={{ borderRadius: 16 }}>

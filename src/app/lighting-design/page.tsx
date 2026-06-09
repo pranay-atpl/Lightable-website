@@ -150,8 +150,8 @@ export default function LightingDesignPage() {
       </Section>
 
       <CTASection
-        title="Let's design your light from the first layer up."
-        lede="Bring us the architecture, the drawings or just the rooms. We'll shape the light around the life inside them."
+        title="Let’s design your light from the first layer up."
+        lede="Bring us the architecture, the drawings or just the rooms. We’ll shape the light around the life inside them."
       />
 
       <style>{`

@@ -189,7 +189,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <CTASection
         title="Start your own project."
-        lede="Bring us the space and the brief. We'll design the light around it."
+        lede="Bring us the space and the brief. We’ll design the light around it."
         label="Book a consultation"
       />
 

@@ -48,7 +48,7 @@ export default function LightingControlPage() {
       <PageHero
         eyebrow="Lighting · Control & automation"
         title={<>KNX &amp; Lutron, made effortless.</>}
-        lede="The design only lives once it's controlled. We program scenes, dimming, schedules and daylight-follow onto rock-solid KNX and Lutron systems — then make them feel like a single touch."
+        lede="The design only lives once it’s controlled. We program scenes, dimming, schedules and daylight-follow onto rock-solid KNX and Lutron systems — then make them feel like a single touch."
         crumbs={[{ name: "Control & Automation", href: "/lighting-control" }]}
         aside={
           <Reveal className="lc-aside panel lit">
@@ -80,7 +80,7 @@ export default function LightingControlPage() {
           <SectionHeader
             eyebrow="KNX vs Lutron"
             title="Two great systems, simply explained"
-            lede="We design and commission both, and recommend the right one for your space — never the one that's easiest for us."
+            lede="We design and commission both, and recommend the right one for your space — never the one that’s easiest for us."
           />
           <div className="lc-compare">
             <Reveal className="lc-sys panel lit">
@@ -136,7 +136,7 @@ export default function LightingControlPage() {
       <CTASection
         eyebrow="Specify control"
         title="Make the light answer to one touch."
-        lede="Whether it's KNX, Lutron or a system already part-installed, we'll design the control and program it to feel effortless."
+        lede="Whether it’s KNX, Lutron or a system already part-installed, we’ll design the control and program it to feel effortless."
         label="Talk control systems"
       />
 

@@ -9,7 +9,7 @@ import { SITE } from "@/lib/site";
 export const metadata = pageMeta({
   title: "Contact",
   description:
-    "Book a lighting design consultation with Lightable. Tell us about your space — residential, commercial or façade — and how you'd like it to feel.",
+    "Book a lighting design consultation with Lightable. Tell us about your space — residential, commercial or façade — and how you’d like it to feel.",
   path: "/contact",
 });
 
@@ -21,7 +21,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Book a consultation"
         title={<>Let&rsquo;s talk about your space.</>}
-        lede="Tell us about the rooms, the architecture and the moods you want. We'll arrange a consultation and take it from there."
+        lede="Tell us about the rooms, the architecture and the moods you want. We’ll arrange a consultation and take it from there."
         crumbs={[{ name: "Contact", href: "/contact" }]}
       />
 

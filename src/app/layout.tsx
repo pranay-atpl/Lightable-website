@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { MoodProvider, NO_FLASH_SCRIPT } from "@/lib/theme";
@@ -55,6 +55,11 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#0a0a0c",
 };
 
 export default function RootLayout({

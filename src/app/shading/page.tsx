@@ -55,7 +55,7 @@ export default function ShadingPage() {
           <SectionHeader
             eyebrow="What it does"
             title="One gesture for glare, privacy and mood"
-            lede="Because shading shares the lighting's control layer, it never feels like a separate system — it's just part of the scene."
+            lede="Because shading shares the lighting’s control layer, it never feels like a separate system — it’s just part of the scene."
           />
           <div style={{ marginTop: "3rem", ["--fcols" as string]: "4" } as React.CSSProperties}>
             <FeatureCards items={features} />
