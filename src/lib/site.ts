@@ -7,8 +7,8 @@ export const SITE = {
   description:
     "Lightable is an architectural lighting design and automation studio. We design layered, scene-based light and control it seamlessly with KNX and Lutron — for high-end residences and boutique commercial spaces.",
   // Placeholder NAP — replace with real studio details before launch.
-  url: "https://lightable.studio",
-  email: "studio@lightable.studio",
+  url: "https://lightable.in",
+  email: "studio@lightable.in",
   phone: "+44 20 7946 0102",
   address: {
     street: "Unit 4, The Foundry, 18 Clerkenwell Road",
