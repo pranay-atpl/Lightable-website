@@ -1,0 +1,388 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   LIGHTABLE — design tokens & theme engine
+   Two animated drivers re-light the entire site:
+     --temp  0 (cool ≈6500K) → 1 (warm ≈2200K)
+     --bri   0 (dim)         → 1 (bright)
+   Everything else derives via color-mix(in oklch …). Registering the drivers as
+   <number> lets them animate, so dependent colors transition smoothly.
+   ============================================================================ */
+
+@property --temp {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.62;
+}
+@property --bri {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.52;
+}
+
+:root {
+  /* ---- cool anchors (temp = 0) ---- */
+  --cool-light: oklch(0.93 0.035 235);
+  --cool-glow: oklch(0.82 0.09 234);
+  --cool-accent: oklch(0.84 0.07 224);
+  --cool-tint: oklch(0.17 0.022 245);
+
+  /* ---- warm anchors (temp = 1) ---- */
+  --warm-light: oklch(0.9 0.072 72);
+  --warm-glow: oklch(0.79 0.13 60);
+  --warm-accent: oklch(0.81 0.11 66);
+  --warm-tint: oklch(0.155 0.026 52);
+
+  --bg-base: oklch(0.045 0.006 280);
+
+  /* ---- derived light ---- */
+  --light: color-mix(in oklch, var(--cool-light), var(--warm-light) calc(var(--temp) * 100%));
+  --glow: color-mix(in oklch, var(--cool-glow), var(--warm-glow) calc(var(--temp) * 100%));
+  --accent: color-mix(in oklch, var(--cool-accent), var(--warm-accent) calc(var(--temp) * 100%));
+  --tint: color-mix(in oklch, var(--cool-tint), var(--warm-tint) calc(var(--temp) * 100%));
+
+  /* ---- surfaces: lift toward the mood tint as brightness rises ---- */
+  --bg: color-mix(in oklch, var(--bg-base), var(--tint) calc(18% + var(--bri) * 42%));
+  --surface: color-mix(in oklch, var(--bg), white 4%);
+  --surface-2: color-mix(in oklch, var(--bg), white 7.5%);
+  --surface-3: color-mix(in oklch, var(--bg), white 11%);
+  --line: color-mix(in oklch, var(--bg), white 14%);
+  --line-strong: color-mix(in oklch, var(--bg), white 24%);
+
+  /* ---- text: near-white, faintly tinted by the prevailing light ---- */
+  --text: color-mix(in oklch, oklch(0.965 0.008 90), var(--light) 16%);
+  --muted: color-mix(in oklch, var(--text), var(--bg) 42%);
+  --faint: color-mix(in oklch, var(--text), var(--bg) 64%);
+
+  /* ---- bloom: glow intensity, driven by brightness ---- */
+  --bloom: calc(0.22 + var(--bri) * 0.68);
+
+  --maxw: 80rem;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --radius: 14px;
+}
+
+/* Smoothly animate the two drivers; dependent colors recompute each frame. */
+html {
+  transition: --temp 1100ms cubic-bezier(0.33, 0, 0.2, 1),
+    --bri 1100ms cubic-bezier(0.33, 0, 0.2, 1);
+  background: var(--bg-base);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@theme inline {
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-hanken);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  transition: background-color 1100ms cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+::selection {
+  background: color-mix(in oklch, var(--glow), transparent 55%);
+  color: var(--text);
+}
+
+/* ---------- ambient light & atmosphere (fixed, behind everything) ---------- */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.atmosphere::before {
+  /* primary light pool, top */
+  content: "";
+  position: absolute;
+  inset: -20% -20% auto -20%;
+  height: 90vh;
+  background: radial-gradient(
+    60% 70% at 50% 0%,
+    color-mix(in oklch, var(--glow), transparent 72%) 0%,
+    transparent 70%
+  );
+  opacity: var(--bloom);
+  transition: opacity 1100ms ease;
+}
+.atmosphere::after {
+  /* vignette to deepen the room edges */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 30%, transparent 45%, var(--bg-base) 100%);
+  opacity: 0.9;
+}
+
+/* film grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- typography ---------- */
+.font-display {
+  font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  font-optical-sizing: auto;
+}
+.font-mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  font-weight: 380;
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  margin: 0;
+  color: color-mix(in oklch, var(--text), var(--light) 6%);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* fluid display sizes */
+.t-hero {
+  font-size: clamp(2.7rem, 8vw, 6.6rem);
+  font-weight: 350;
+}
+.t-h1 {
+  font-size: clamp(2.2rem, 5.2vw, 4rem);
+}
+.t-h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.85rem);
+}
+.t-h3 {
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+}
+
+/* technical eyebrow / spec label */
+.eyebrow {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.6em;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.lede {
+  font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 44ch;
+}
+
+/* ---------- layout primitives ---------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(4.5rem, 11vh, 9rem);
+}
+.section-tight {
+  padding-block: clamp(3rem, 7vh, 5.5rem);
+}
+
+/* ---------- surfaces & light treatments ---------- */
+.panel {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--surface-2), transparent 0%),
+    var(--surface)
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* a pool of light behind/under content */
+.lit {
+  position: relative;
+}
+.lit::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklch, var(--glow), transparent calc(40% + (1 - var(--bloom)) * 45%)),
+    transparent 55%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-edge {
+  box-shadow: 0 0 0 1px var(--line),
+    0 30px 80px -40px color-mix(in oklch, var(--glow), transparent calc(35% + (1 - var(--bloom)) * 50%));
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  --btn-bg: var(--surface-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.5em;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--line-strong);
+  background: var(--btn-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.33, 0, 0.2, 1), box-shadow 0.4s ease,
+    border-color 0.4s ease, background-color 0.4s ease;
+  will-change: transform;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--accent), transparent 40%);
+  box-shadow: 0 18px 50px -28px color-mix(in oklch, var(--glow), transparent 30%);
+}
+.btn-primary {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--light), var(--bg) 8%),
+    color-mix(in oklch, var(--accent), var(--bg) 28%)
+  );
+  color: oklch(0.16 0.02 60);
+  border-color: transparent;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  box-shadow: 0 22px 60px -24px color-mix(in oklch, var(--glow), transparent 18%);
+}
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+}
+
+/* focus visibility — survives every mood */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--accent), white 25%);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- small bits ---------- */
+.tag {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 0.4em 0.8em;
+  border-radius: 999px;
+}
+.hr {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+}
+.rule-grid {
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask: radial-gradient(circle at 50% 0%, #000, transparent 75%);
+  mask: radial-gradient(circle at 50% 0%, #000, transparent 75%);
+  opacity: 0.4;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: var(--surface-2);
+  padding: 0.7em 1.1em;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+}
+
+/* reveal default (visible by default for no-JS / reduced-motion safety) */
+.reveal {
+  opacity: 1;
+}
+
+main {
+  position: relative;
+  z-index: 2;
+}
